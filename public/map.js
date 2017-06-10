@@ -1,6 +1,6 @@
 
 var map = null;
-var center = new google.maps.LatLng(40.74,-74.0);
+var center = new google.maps.LatLng(51.5125,-0.0914);
 
 function fetch_tile(coord, zoom) {
   console.log($('#country').val())
@@ -26,11 +26,10 @@ function geocode(query, country) {
     if (typeof(query) == 'string') {
         pattr = /\sny\s|\snewyork\s|\snew york\s/gi;
         match = query.match(pattr);
-        if (!match && country === 'uscr') {
-            query = query + ' NY';
-        } else {
-          query = query + ' LONDON';
+        if (!match) {
+            query = query + (country === 'uscr') ? ' NY' : 'LONDON';
         }
+
         gr = { 'address': query };
     } else {
         gr = { 'location': query };
@@ -47,7 +46,7 @@ function handle_geocode(results, status) {
     normalized_address = results[0].formatted_address;
     $('#query').val(normalized_address)
 
-    var zoom = (has_zoomed) ? map.zoom : 12;
+    var zoom = (has_zoomed) ? map.zoom : 14;
     process_location(lat, lng, zoom, true);
 }
 
@@ -183,7 +182,7 @@ $(document).ready(function() {
   map_options = {
     minZoom: 5,
     maxZoom: 15,
-    zoom: 12,
+    zoom: 14,
     center: center,
     mapTypeControl: false,
     zoomControl: false,
