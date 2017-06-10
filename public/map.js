@@ -23,17 +23,17 @@ var has_zoomed = false;
 var has_moved = false;
 
 function geocode(query, country) {
-    if (typeof(query) == 'string') {
-        pattr = /\sny\s|\snewyork\s|\snew york\s/gi;
-        match = query.match(pattr);
-        if (!match) {
-            query = query + (country === 'uscr') ? ' NY' : 'LONDON';
-        }
+    console.log('query=' + query + 'country=' + country)
 
-        gr = { 'address': query };
-    } else {
-        gr = { 'location': query };
+    if(query.trim().length === 0) {
+      query = country === 'uscr' ? 'NY' : 'LONDON';
     }
+    console.log('query2=' + query)
+
+    query = query + (country === 'uscr' ? ' USA' : ' UK');
+
+    console.log('geocode query: ' + query)
+    gr = { 'address': query };
     geocoder.geocode(gr, handle_geocode);
 }
 
@@ -267,6 +267,7 @@ $(document).ready(function() {
     }
 
     $("#search").submit(function(){
+      console.log($("#query").val() + " " + $("#country").val())
       geocode($("#query").val(), $("#country").val());
       return false;
     });
