@@ -3,7 +3,8 @@ var map = null;
 var center = new google.maps.LatLng(40.74,-74.0);
 
 function fetch_tile(coord, zoom) {
-  return "http://riskarma.com/map/cr" + "/.tiles/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+  console.log($('#country').val())
+  return "http://59.110.228.51/map/" + $('#country').val() + "/.tiles/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
 }
 
 function mobilecheck() {
@@ -21,12 +22,14 @@ var user_image = 'favorite_marker.png';
 var has_zoomed = false;
 var has_moved = false;
 
-function geocode(query) {
+function geocode(query, country) {
     if (typeof(query) == 'string') {
         pattr = /\sny\s|\snewyork\s|\snew york\s/gi;
         match = query.match(pattr);
-        if (!match) {
+        if (!match && country === 'uscr') {
             query = query + ' NY';
+        } else {
+          query = query + ' LONDON';
         }
         gr = { 'address': query };
     } else {
@@ -231,6 +234,12 @@ $(document).ready(function() {
                 { visibility: "off" }
             ]
         },{
+            featureType: "poi.lodging",
+            elementType: "geometry",
+            stylers: [
+                { visibility: "on" }
+            ]
+        },{
             featureType: "road",
             elementType: "geometry",
             stylers: [
@@ -258,7 +267,11 @@ $(document).ready(function() {
       parse_hash(initial_hash);
     }
 
-    $("#search").submit(function(){geocode($("#query").val());return false;});
+    $("#search").submit(function(){
+      geocode($("#query").val(), $("#country").val());
+      return false;
+    });
+
     $("#show-wards").click(function(){
         if(this.checked){
             map.overlayMapTypes.push(wards);

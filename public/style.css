@@ -49,6 +49,7 @@ body {
 #legend form#search label {font-size:12px; display:block;}
 #legend form#search input {font-size:11px; margin-top:4px;}
 #legend form#search input[type=text] {width:180px;}
+#legend form#search select {width:150px;}
 #legend form#search #alt-addresses p {margin-bottom:2px; font-style:italic;}
 #legend form#search #alt-addresses a {display:block; margin-bottom:3px;}
 
