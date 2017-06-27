@@ -17,7 +17,7 @@ let gmapOptions = {
   method: 'GET'
 };
 let rkOptions = {
-  hostname: 'riskarma.com',
+  hostname: '59.110.228.51', //'riskarma.com',
   port: '80',
   path: '/',
   method: 'GET'
@@ -25,7 +25,7 @@ let rkOptions = {
 
 
 exports.scoreAllHotels = (req, res, next) => {
-  Promise.all(usHotels)
+  Promise.all(ukHotels)
   .then(hotels => {
     hotels.forEach(hotel => {
 
@@ -44,7 +44,7 @@ exports.scoreAllHotels = (req, res, next) => {
                             `Status Code: ${statusCode}`);
         }
         if(error) {
-          console.error(error.message);
+          //console.error(error.message);
           res.resume();
           return;
         }
@@ -57,15 +57,15 @@ exports.scoreAllHotels = (req, res, next) => {
             const scoreData = JSON.parse(rawData);
 
             hotel['score'] = scoreData.score;
-            console.log(hotel);
+            console.log(JSON.stringify(hotel, null, 2));
             console.log(',');
 
           } catch(e) {
-            console.error(e.message);
+            //console.error(e.message);
           }
         });
       }).on('error', (e) => {
-        console.error(`Got error: ${e.message}`);
+        //console.error(`Got error: ${e.message}`);
       });
       sleep(1000);
     });
